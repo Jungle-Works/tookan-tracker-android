@@ -1,7 +1,6 @@
 package com.intertest;
 
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +8,6 @@ import tookan.tookantrack.Trackio;
 import tookan.tookantrack.model.TrackerOptions;
 
 public class MainActivity extends AppCompatActivity {
-    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,18 +20,19 @@ public class MainActivity extends AppCompatActivity {
         if (!Trackio.isInitialized()) {
             TrackerOptions trackerOptions = new TrackerOptions();
             trackerOptions.setEtaTextColor(R.color.colorPrimary);
-            trackerOptions.setPolylineColor(R.color.polyline_color);
+            trackerOptions.setPathUpdateTimer(15000);
+            trackerOptions.setMarkerIcon(R.drawable.ic_agent_marker);
 
             Trackio.setSingletonInstance(new Trackio.Builder(this)
                     .appName(getString(R.string.app_name))
-                    .userId("tookan_user_id")
+                    .userId("your_user_id")
                     .mapKey("your_google_api_key")
                     .trackerOptions(trackerOptions)
                     .build());
         }
 
         Trackio.get().setupTrackingFragment(MainActivity.this, Trackio.TrackerType.TASK
-                , "tookan_task_id", R.id.frameLayout, getSupportFragmentManager());
+                , "task_id", R.id.frameLayout, getSupportFragmentManager());
 
     }
 
